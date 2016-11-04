@@ -90,6 +90,7 @@ class Blob():
 			if(self.touchingEdge==False):
 				found=False
 				while(found==False):
+					print "found = false!"
 					a=random.randint(0, (IMGSIZE-1))
 					b=random.randint(0, (IMGSIZE-1))
 					if(self.clearSurrounding(a, b, int(np.sqrt(size/np.pi)+4))==True):
@@ -404,6 +405,7 @@ class Blob():
 			self.deleteCells(blobSideA, blobSideB, 'B')
 
 	def colorHalf(self):
+		# self.hasEdges
 		print 'In color half!'
 		readyFill=False
 		for i in range(IMGSIZE):
@@ -478,7 +480,7 @@ class Blob():
 	def isAboveLine(self, a, b, c):
 		return ((b[0] - a[0])*(c[1] - a[1]) - (b[1] - a[1])*(c[0] - a[0])) > 0
 
-	def deleteCells(self, blobSideA, blobSideB, side, color):
+	def deleteCells(self, blobSideA, blobSideB, side):
 		if side=='A':
 			toDelete=blobSideA
 		else:
@@ -560,6 +562,8 @@ class Blob():
 			# 	print 'pixInBlob = '+str(pixInBlob)
 			self.pix=None
 			self.typeList=[]
+		if self.hasEdges==3:
+			self.colorHalf()
 		# Begin choosing colors for each pixel.
 		self.stage=1
 		self.fillShades()

@@ -13,10 +13,10 @@ from blobClass.blob import Blob
 
 # testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
 			# sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name, hasEdges)
-for i in range(10):
+for i in range(50):
 	numBlob=random.randrange(1,4)
-	minSize=200
-	maxSize=600
+	minSize=400
+	maxSize=1000
 	blobThresh=random.randint(110, 180)
 	innerThresh=random.randint(5, 70)
 	sigma=random.randint(50, 120)
