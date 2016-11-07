@@ -1,4 +1,5 @@
 from PIL import Image, ImageFilter
+import matplotlib.cm as cm
 import numpy as np
 import random
 import math
@@ -347,7 +348,10 @@ class Blob():
 			maxBlobs=self.numBlob+2
 		else:
 			maxBlobs=self.numBlob+1
-		for i in range(1,maxBlobs):
+
+# BACKGROUND CONTROL!!!! 0/1
+
+		for i in range(0,maxBlobs):
 			pixList=self.getList(i)
 			for j in pixList:
 				self.pix=j
@@ -406,17 +410,33 @@ class Blob():
 
 	def colorHalf(self):
 		# self.hasEdges
+		# if self.hasEdges==2:
 		print 'In color half!'
 		readyFill=False
-		for i in range(IMGSIZE):
-			for j in range(IMGSIZE):
-				self.imgType[i, j]=0
+		# for i in range(IMGSIZE):
+		# 	for j in range(IMGSIZE):
+		# 		self.imgType[i, j]=0
 		while readyFill==False:
 			# print "finding intersect"
 			# fromCenter = self.getList(self.blobNum)
 			# print 'fromCenter has len '+str(len(fromCenter))
 			# intersect = fromCenter[random.randrange(0,len(fromCenter)/4)]
-			intersect=(random.randrange(int(IMGSIZE*0.05), int(IMGSIZE*0.95)), random.randrange(int(IMGSIZE*0.05), int(IMGSIZE*0.95)))
+			if self.hasEdges==2:
+				intersect=(random.randrange(int(IMGSIZE*0.05), int(IMGSIZE*0.95)), random.randrange(int(IMGSIZE*0.05), int(IMGSIZE*0.95)))
+			elif self.hasEdges==3:
+				print "it's 3!"
+				found=False
+				intBlob = 0
+				while found==False:
+					i=random.randint(0, IMGSIZE-1)
+					j=random.randint(0, IMGSIZE-1)
+					if self.imgType[i, j] != 0:
+						intBlob = self.imgType[i, j]
+						intersect = (i, j)
+						found = True
+						print self.imgType[i, j]
+				print "color half found = "+str(found)
+
 			up=IMGSIZE-intersect[1]
 			right=IMGSIZE-intersect[0]
 			down=intersect[1]
@@ -445,8 +465,18 @@ class Blob():
 				continue
 			else:
 				for cell in toColor:
-					self.imgType[cell[0], cell[1]]=self.numBlob+1
+					if self.addEdges==2:
+						self.imgType[cell[0], cell[1]]=self.numBlob+1
+					elif self.hasEdges==3:
+						print "changing!!!!!!"
+						if self.imgType[cell[0], cell[1]]==0:
+							self.imgType[cell[0], cell[1]]=intBlob
+						elif self.imgType[cell[0], cell[1]]==intBlob:
+							continue
+						else:
+							self.imgType[cell[0], cell[1]]=0
 				readyFill=True
+
 
 
 
@@ -563,6 +593,7 @@ class Blob():
 			self.pix=None
 			self.typeList=[]
 		if self.hasEdges==3:
+			print "------------HAS EDGES = 3!!!"
 			self.colorHalf()
 		# Begin choosing colors for each pixel.
 		self.stage=1
@@ -625,9 +656,29 @@ class Blob():
 							toSave[i,j]=(toMix[a],toMix[b],toMix[c])
 
 		else:
+
+
+
+			# for i in range(IMGSIZE):
+			# 	for j in range(IMGSIZE):
+					# toSave[i,j]=(self.imgPlot[i,j],0,255-self.imgPlot[i,j])
+					# if self.imgPlot[i,j] > 127:
+					# 	toSave[i,j] = (2*(127-self.imgPlot[i,j]), 0, 0)
+					# 	print "Greater! "+str(toSave[i,j])+" "+str(self.imgPlot[i,j])+" "+str(2*(127-self.imgPlot[i,j]))
+					# elif self.imgPlot[i,j] < 127:
+					# 	toSave[i,j] = (0, 0, 2*(self.imgPlot[i,j]-127))
+					# 	print "Less! "+str(toSave[i,j])+" "+str(self.imgPlot[i,j])+" "+str(2*(self.imgPlot[i,j]-127))
+					# else:
+					# 	toSave[i,j] = (255, 255, 255)
+					# 	print "Neutral! "+str(toSave[i,j])
+
 			for i in range(IMGSIZE):
 				for j in range(IMGSIZE):
-					toSave[i,j]=(self.imgPlot[i,j],0,255-self.imgPlot[i,j])
+					norm_tup = cm.coolwarm(self.imgPlot[i,j])#m.to_rgba(i)#/255.0)
+					reg = (int(norm_tup[0]*255), int(norm_tup[1]*255), int(norm_tup[2]*255))
+					# print reg
+					toSave[i, j] = reg
+
 
 		# Apply smoothing filter if class A img.
 		if(self.filterOn==True):
