@@ -155,7 +155,24 @@ for i in range(numImages):
 
 pool.map(Blob.makeImg, imgArr)
 
+# A
 
+# for i in range(20):
+# 	numBlob=random.randrange(1,2)
+# 	minSize=250
+# 	maxSize=1000
+# 	blobThresh=random.randint(180, 220)
+# 	innerThresh=random.randint(10, 15)
+# 	sigma=120#random.randint(90, 120)
+# 	shaderSigma=random.randint(15, 60)
+# 	betweenBlobs=0
+# 	path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
+# 	name='edgeToEdge'
+# 	filterOn=True
+# 	flatBG=False
+# 	touchingEdge=False
+# 	addColors=False
+# 	hasEdges=2
 
 # E:
 

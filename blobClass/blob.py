@@ -352,6 +352,7 @@ class Blob():
 # BACKGROUND CONTROL!!!! 0/1
 
 		for i in range(0,maxBlobs):
+			print "Blob "+str(i)
 			pixList=self.getList(i)
 			for j in pixList:
 				self.pix=j
@@ -459,16 +460,20 @@ class Blob():
 			for i in range(IMGSIZE):
 				for j in range(IMGSIZE):
 					if self.isAboveLine(a, b, (i, j)):
+						# print "Coloring!!"
 						toColor.append((i, j))
 			print 'toColor has '+str(len(toColor))+ 'cells'
 			if len(toColor)>0.8*IMGSIZE*IMGSIZE:
+				# print "continuing!"
 				continue
 			else:
 				for cell in toColor:
-					if self.addEdges==2:
+					if self.hasEdges==2:
+						# print "cell is "+str((cell[0], cell[1]))
 						self.imgType[cell[0], cell[1]]=self.numBlob+1
+						# print self.imgType[cell[0], cell[1]]
 					elif self.hasEdges==3:
-						print "changing!!!!!!"
+						# print "changing!!!!!!"
 						if self.imgType[cell[0], cell[1]]==0:
 							self.imgType[cell[0], cell[1]]=intBlob
 						elif self.imgType[cell[0], cell[1]]==intBlob:
