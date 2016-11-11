@@ -467,6 +467,23 @@ class Blob():
 				# print "continuing!"
 				continue
 			else:
+				if self.hasEdges==3:
+					blobsBehindEdge=range(1, self.numBlob+1)
+					print blobsBehindEdge
+					for blob in range(1, self.numBlob+1):
+						for i in range(IMGSIZE):
+							for j in range(IMGSIZE):
+								if self.imgType[i,j]==blob and (i, j) not in toColor: 
+									if blob in blobsBehindEdge:
+										blobsBehindEdge.remove(blob)
+										continue
+					print "BEHIND EDGE!: "+str(blobsBehindEdge)
+
+
+					allCellsInShaded=False
+					for cell in toColor:
+						if self.imgType[cell[0], cell[1]]==0:
+							allCellsInShaded=True
 				for cell in toColor:
 					if self.hasEdges==2:
 						# print "cell is "+str((cell[0], cell[1]))
@@ -474,12 +491,16 @@ class Blob():
 						# print self.imgType[cell[0], cell[1]]
 					elif self.hasEdges==3:
 						# print "changing!!!!!!"
+						# there=False
 						if self.imgType[cell[0], cell[1]]==0:
 							self.imgType[cell[0], cell[1]]=intBlob
-						elif self.imgType[cell[0], cell[1]]==intBlob:
-							continue
-						else:
+						elif self.imgType[cell[0], cell[1]] in blobsBehindEdge:
+							# print "SAY YEAHHH!!!!! SAY YEAHHH! OHHAHAHAHHHHHHHH!"
 							self.imgType[cell[0], cell[1]]=0
+							# there=True
+						else:
+							continue
+				# print there
 				readyFill=True
 
 

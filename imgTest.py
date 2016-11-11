@@ -174,6 +174,79 @@ pool.map(Blob.makeImg, imgArr)
 # 	addColors=False
 # 	hasEdges=2
 
+# B:
+	# Touching line
+
+	# numBlob=random.randrange(3,4)
+	# minSize=250
+	# maxSize=400
+	# blobThresh=random.randint(180, 220)
+	# innerThresh=random.randint(40, 50)
+	# sigma=120#random.randint(90, 120)
+	# shaderSigma=random.randint(5, 10)
+	# betweenBlobs=0
+	# path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
+	# name='edgeToEdge'
+	# filterOn=True
+	# flatBG=True
+	# touchingEdge=False
+	# addColors=False
+	# hasEdges=3
+
+	# Pixelated
+
+	# numBlob=random.randrange(1,2)
+	# minSize=250
+	# maxSize=400
+	# blobThresh=random.randint(120, 200)
+	# innerThresh=random.randint(20, 50)
+	# sigma=120#random.randint(90, 120)
+	# shaderSigma=random.randint(35, 75)
+	# betweenBlobs=0
+	# path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
+	# name='edgeToEdge'
+	# filterOn=False
+	# flatBG=False
+	# touchingEdge=False
+	# addColors=False
+	# hasEdges=2
+
+# C:
+
+	# numBlob=random.randrange(2,4)
+	# minSize=200
+	# maxSize=350
+	# blobThresh=random.randint(120, 160)
+	# innerThresh=random.randint(10, 50)
+	# sigma=random.randint(45, 90)
+	# shaderSigma=random.randint(35, 75)
+	# betweenBlobs=0
+	# path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
+	# name='edgeToEdge'
+	# filterOn=True
+	# flatBG=False
+	# touchingEdge=False
+	# addColors=False
+	# hasEdges=3
+
+# D:
+
+	# numBlob=random.randrange(1,4)
+	# minSize=200
+	# maxSize=500
+	# blobThresh=random.randint(100, 220)
+	# innerThresh=random.randint(5, 65)
+	# sigma=random.randint(40, 100)
+	# shaderSigma=random.randint(25, 120)
+	# betweenBlobs=0
+	# path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
+	# name='edgeToEdge'
+	# filterOn=True
+	# flatBG=False
+	# touchingEdge=False
+	# addColors=False
+	# hasEdges=0
+
 # E:
 
 # for i in range(5):

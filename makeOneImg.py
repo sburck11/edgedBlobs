@@ -4,12 +4,9 @@ import numpy as np
 import random
 from blobClass.blob import Blob
 
-
-
 			# shaderSigma=random.randint(25, 50)
 			# blobThresh=random.randint(100, 120)
 			# innerThresh=random.randint(70, 90)
-
 
 # testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
 			# sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name, hasEdges)
@@ -33,25 +30,27 @@ from blobClass.blob import Blob
 	# testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
 	# 		sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name*"_"+str(i), hasEdges)
 	# testImage.makeImg()
+for i in range(4):
+	numBlob=random.randrange(1,4)
+	minSize=200
+	maxSize=500
+	blobThresh=random.randint(100, 220)
+	innerThresh=random.randint(5, 65)
+	sigma=random.randint(40, 100)
+	shaderSigma=random.randint(25, 120)
+	betweenBlobs=0
+	path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
+	name='edgeToEdge'
+	filterOn=True
+	flatBG=False
+	touchingEdge=False
+	addColors=False
+	hasEdges=0
 
-numBlob=2
-minSize=1000
-maxSize=2000
-blobThresh=200
-innerThresh=10
-sigma=120#random.randint(90, 120)
-shaderSigma=60
-betweenBlobs=0
-path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
-name='edgeToEdge'
-filterOn=True
-flatBG=False
-touchingEdge=False
-addColors=False
-hasEdges=3
 
-testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
-		sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name, hasEdges)
-testImage.makeImg()
+
+	testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
+			sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name+'_'+str(i), hasEdges)
+	testImage.makeImg()
 
 
