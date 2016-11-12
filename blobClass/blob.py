@@ -91,7 +91,7 @@ class Blob():
 			if(self.touchingEdge==False):
 				found=False
 				while(found==False):
-					print "found = false!"
+					# print "found = false!"
 					a=random.randint(0, (IMGSIZE-1))
 					b=random.randint(0, (IMGSIZE-1))
 					if(self.clearSurrounding(a, b, int(np.sqrt(size/np.pi)+4))==True):
@@ -235,7 +235,7 @@ class Blob():
 	# "center of mass" of blob/background. This "center of mass" is the pixel with ~equal
 	# numbers of pixels below, above, left, and right.
 	def getList(self, blobNum):
-		print 'Making list for blobNum '+str(blobNum)
+		# print 'Making list for blobNum '+str(blobNum)
 		center=[0.0,0.0]
 		wWeight=[0]*IMGSIZE
 		hWeight=[0]*IMGSIZE
@@ -246,12 +246,12 @@ class Blob():
 					blobList.append((i,j))
 					wWeight[i]=wWeight[i]+1
 					hWeight[j]=hWeight[j]+1
-		print 'blobList has length '+str(len(blobList))
-		if len(blobList)==1:
-			for i in range(IMGSIZE):
-				for j in range(IMGSIZE):
-					if(self.imgType[i][j]==blobNum):
-						print 'pix in blob!'
+		# print 'blobList has length '+str(len(blobList))
+		# if len(blobList)==1:
+		# 	for i in range(IMGSIZE):
+		# 		for j in range(IMGSIZE):
+		# 			if(self.imgType[i][j]==blobNum):
+		# 				# print 'pix in blob!'
 
 		wPoint=0
 		hPoint=0
@@ -352,7 +352,7 @@ class Blob():
 # BACKGROUND CONTROL!!!! 0/1
 
 		for i in range(0,maxBlobs):
-			print "Blob "+str(i)
+			# print "Blob "+str(i)
 			pixList=self.getList(i)
 			for j in pixList:
 				self.pix=j
@@ -370,9 +370,9 @@ class Blob():
 	# Get slope instead of choosing 2 pts because square would make diagonal lines more probably than vert/horiz. lines
 	def addEdges(self):
 		# intersectPlot=copy.deepcopy(self.imgType)
-		print "finding intersect"
+		# print "finding intersect"
 		fromCenter = self.getList(self.blobNum)
-		print 'fromCenter has len '+str(len(fromCenter))
+		# print 'fromCenter has len '+str(len(fromCenter))
 		intersect = fromCenter[random.randrange(0,len(fromCenter)/4)]
 		up=IMGSIZE-intersect[1]
 		right=IMGSIZE-intersect[0]
@@ -412,7 +412,7 @@ class Blob():
 	def colorHalf(self):
 		# self.hasEdges
 		# if self.hasEdges==2:
-		print 'In color half!'
+		# print 'In color half!'
 		readyFill=False
 		# for i in range(IMGSIZE):
 		# 	for j in range(IMGSIZE):
@@ -425,7 +425,7 @@ class Blob():
 			if self.hasEdges==2:
 				intersect=(random.randrange(int(IMGSIZE*0.05), int(IMGSIZE*0.95)), random.randrange(int(IMGSIZE*0.05), int(IMGSIZE*0.95)))
 			elif self.hasEdges==3:
-				print "it's 3!"
+				# print "it's 3!"
 				found=False
 				intBlob = 0
 				while found==False:
@@ -435,8 +435,8 @@ class Blob():
 						intBlob = self.imgType[i, j]
 						intersect = (i, j)
 						found = True
-						print self.imgType[i, j]
-				print "color half found = "+str(found)
+						# print self.imgType[i, j]
+				# print "color half found = "+str(found)
 
 			up=IMGSIZE-intersect[1]
 			right=IMGSIZE-intersect[0]
@@ -462,44 +462,60 @@ class Blob():
 					if self.isAboveLine(a, b, (i, j)):
 						# print "Coloring!!"
 						toColor.append((i, j))
-			print 'toColor has '+str(len(toColor))+ 'cells'
+			# print 'toColor has '+str(len(toColor))+ 'cells'
 			if len(toColor)>0.8*IMGSIZE*IMGSIZE:
 				# print "continuing!"
 				continue
 			else:
 				if self.hasEdges==3:
-					blobsBehindEdge=range(1, self.numBlob+1)
-					print blobsBehindEdge
-					for blob in range(1, self.numBlob+1):
-						for i in range(IMGSIZE):
-							for j in range(IMGSIZE):
-								if self.imgType[i,j]==blob and (i, j) not in toColor: 
-									if blob in blobsBehindEdge:
-										blobsBehindEdge.remove(blob)
-										continue
-					print "BEHIND EDGE!: "+str(blobsBehindEdge)
+					blobsBehindEdge=list()#range(1, self.numBlob+1)
+					# print blobsBehindEdge
+					# for blob in range(1, self.numBlob+1):
+					# 	for i in range(IMGSIZE):
+					# 		for j in range(IMGSIZE):
+					# 			if self.imgType[i, j]==blob and (i, j) in toColor: 
+					# 				if blob in blobsBehindEdge:
+					# 					blobsBehindEdge.append(blob)#remove(blob)
+					# 					print str((i, j))+" is behind of the edge and is in blob #"+str(blob)
+					# 					continue
+
+					for cell in toColor:
+						i=cell[0]
+						j=cell[1]
+						# print self.imgType[i, j], [0, intBlob]
+						if self.imgType[cell[0], cell[1]] not in [0, intBlob]:
+							# print self.imgType[i, j], blobsBehindEdge
+							if self.imgType[i, j] not in blobsBehindEdge:
+								blobsBehindEdge.append(self.imgType[i, j])
+								# print str((i, j))+" is behind of the edge and is in blob #"+str(self.imgType[i, j])
+					# print "BEHIND EDGE!: "+str(blobsBehindEdge)
 
 
 					allCellsInShaded=False
 					for cell in toColor:
 						if self.imgType[cell[0], cell[1]]==0:
 							allCellsInShaded=True
-				for cell in toColor:
-					if self.hasEdges==2:
+				# for cell in toColor:
+				if self.hasEdges==2:
+					for cell in toColor:
 						# print "cell is "+str((cell[0], cell[1]))
 						self.imgType[cell[0], cell[1]]=self.numBlob+1
 						# print self.imgType[cell[0], cell[1]]
-					elif self.hasEdges==3:
-						# print "changing!!!!!!"
-						# there=False
-						if self.imgType[cell[0], cell[1]]==0:
-							self.imgType[cell[0], cell[1]]=intBlob
-						elif self.imgType[cell[0], cell[1]] in blobsBehindEdge:
-							# print "SAY YEAHHH!!!!! SAY YEAHHH! OHHAHAHAHHHHHHHH!"
-							self.imgType[cell[0], cell[1]]=0
-							# there=True
-						else:
-							continue
+				elif self.hasEdges==3:
+					# print "changing!!!!!!"
+					# there=False
+					for i in range(IMGSIZE):
+						for j in range(IMGSIZE):
+
+							if self.imgType[i, j]==0:
+								if (i, j) in toColor:
+									self.imgType[i, j]=intBlob
+							elif self.imgType[i, j] in blobsBehindEdge:
+								# print "SAY YEAHHH!!!!! SAY YEAHHH! OHHAHAHAHHHHHHHH!"
+								self.imgType[i, j]=0
+								# there=True
+							else:
+								continue
 				# print there
 				readyFill=True
 
@@ -555,23 +571,23 @@ class Blob():
 	# Main method.
 	def makeImg(self):
 		img=Image.new('RGB', (IMGSIZE,IMGSIZE), 'white')
-		print '\nMaking image: '+self.name
+		# print '\nMaking image: '+self.name
 
 		# Choose which pixels belong to which blobs.
-		print 'This image has '+str(self.numBlob)+' blobs'
+		# print 'This image has '+str(self.numBlob)+' blobs'
 		if(self.hasEdges==2):
 			self.colorHalf()
-			pixInBlob=0
-			for x in range(IMGSIZE):
-				for y in range(IMGSIZE):
-					if self.imgType[x,y]==self.numBlob+1:
-						pixInBlob += 1
-			print 'pixInBlob = '+str(pixInBlob)
+			# pixInBlob=0
+			# for x in range(IMGSIZE):
+			# 	for y in range(IMGSIZE):
+			# 		if self.imgType[x,y]==self.numBlob+1:
+			# 			pixInBlob += 1
+			# print 'pixInBlob = '+str(pixInBlob)
 		for i in range(self.numBlob):
 			self.blobNum=i+1
-			print '\nGenerating blobNum '+str(self.blobNum)
+			# print '\nGenerating blobNum '+str(self.blobNum)
 			blobSize = random.randint(self.minSize, self.maxSize)
-			print 'This blob has ' +str(blobSize)+' pixels'
+			# print 'This blob has ' +str(blobSize)+' pixels'
 			for j in range(blobSize):
 				if(self.getPix(blobSize)==False):
 					break
@@ -619,7 +635,7 @@ class Blob():
 			self.pix=None
 			self.typeList=[]
 		if self.hasEdges==3:
-			print "------------HAS EDGES = 3!!!"
+			# print "------------HAS EDGES = 3!!!"
 			self.colorHalf()
 		# Begin choosing colors for each pixel.
 		self.stage=1
@@ -709,5 +725,6 @@ class Blob():
 		# Apply smoothing filter if class A img.
 		if(self.filterOn==True):
 			img=img.filter(ImageFilter.BLUR)
+		print "Creating Image "+self.name
 		img.save(self.dirPath + '/' + self.name + '.png')
 

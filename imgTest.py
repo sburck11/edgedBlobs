@@ -5,16 +5,16 @@ import random
 from blobClass.blob import Blob
 from pathos.multiprocessing import ProcessingPool
 
-numImages = 16
-numBlob=2
-minSize=800
-maxSize=1800
-blobThresh=100
-innerThresh=50
-sigma=55
-shaderSigma=30
-betweenBlobs=5
-path='/Users/Sam/Desktop/regenProj/Blob_Images/blobClass1'
+numImages = 5000
+# numBlob=2
+# minSize=800
+# maxSize=1800
+# blobThresh=100
+# innerThresh=50
+# sigma=55
+# shaderSigma=30
+# betweenBlobs=5
+path='/Users/Sam/Desktop/regenProj/edgedBlobs/Training_Set'
 # 'mp' for multiprocessing, 'mt' for multithreading
 MODE='mp'
 
@@ -40,117 +40,112 @@ for i in range(numImages):
 	addColors=False
 	if(type==4):
 		# GRADE D, WORST CASE!
-		filterOn=False
+		numBlob=random.randrange(1,4)
+		minSize=200
+		maxSize=500
+		blobThresh=random.randint(100, 220)
+		innerThresh=random.randint(5, 65)
+		sigma=random.randint(40, 100)
+		shaderSigma=random.randint(25, 120)
+		betweenBlobs=0
+		filterOn=True
 		flatBG=False
-		numBlob=random.randint(0, 3)
-		if(numBlob==1):
-			numBlob=random.randint(2,3)
 		touchingEdge=False
-		sigma=random.randint(5, 40)
-		shaderSigma=random.randint(1, 30)
-		minSize=random.randint(800, 1000)
-		maxSize=random.randint(1000, 3000)
-		blobThresh=random.randint(30, 120)
-		innerThresh=random.randint(40, 180)
+		addColors=False
+		hasEdges=0
 		name='D_'+str(i)
-		if(bool(random.getrandbits(1))):
-			addColors=True
 	elif(type==3):
-		# Grade C
+		# Grade C, E
 		filterOn=False
 		flatBG=False
 		touchingEdge=False
-		flaw=random.randint(0,2)
+		flaw=random.randint(0,1)
 		if(flaw==0):
-			# 1 Blob
-			numBlob=1
-			touchingEdge=True
-			sigma=50
-			shaderSigma=random.randint(40, 100)
-			blobThresh=random.randint(100, 120)
-			innerThresh=random.randint(120, 180)
-			minSize=random.randint(400, 600)
-			maxSize=random.randint(800, 1200)
+			# Grade C
+			numBlob=random.randrange(2,4)
+			minSize=200
+			maxSize=350
+			blobThresh=random.randint(120, 160)
+			innerThresh=random.randint(10, 50)
+			sigma=random.randint(75, 120)
+			shaderSigma=random.randint(35, 75)
+			betweenBlobs=0
+			filterOn=True
+			flatBG=False
+			touchingEdge=False
+			addColors=False
+			hasEdges=3
+			name='C_'+str(i)
 		elif(flaw==1):
-			# Not Jagged
-			numBlob=random.randint(2,3)
-			sigma=random.randint(130, 180)
-			shaderSigma=random.randint(25, 50)
-			blobThresh=random.randint(100, 120)
-			innerThresh=random.randint(70, 90)
-			minSize=random.randint(500, 800)
-			maxSize=random.randint(1000, 1500)
-		else:
-			# Not pixelated
-			flatBG=True
-			numBlob=random.randint(2,3)
-			minSize=random.randint(500, 800)
-			maxSize=random.randint(1000, 1250)
-			sigma=50
-			shaderSigma=random.randint(100, 150)
-			blobThresh=random.randint(120, 150)
-			innerThresh=random.randint(5, 15)
-		name='C_'+str(i)
+			# Grade E
+			numBlob=random.randrange(1,2)
+			minSize=1000
+			maxSize=2000
+			blobThresh=random.randint(180, 220)
+			innerThresh=random.randint(10, 20)
+			sigma=120#random.randint(90, 120)
+			shaderSigma=random.randint(15, 50)
+			betweenBlobs=0
+			filterOn=True
+			flatBG=False
+			touchingEdge=True
+			addColors=False
+			hasEdges=1
+			name='E_'+str(i)
+		
 	elif(type==2):
 		# Grade B
-		filterOn=False
-		numBlob=1
-		touchingEdge=False
-		flaw=random.randint(0,2)
+		flaw=random.randint(0,1)
 		if(flaw==0):
-			# 1 Blob, Not Jagged
-			numBlob=1
-			touchingEdge=True
-			flatBG=False
+			# Pixelated
+			numBlob=random.randrange(1,2)
+			minSize=250
+			maxSize=400
+			blobThresh=random.randint(120, 200)
+			innerThresh=random.randint(20, 50)
+			sigma=120#random.randint(90, 120)
+			shaderSigma=random.randint(35, 75)
+			betweenBlobs=0
 			filterOn=True
-			sigma=random.randint(130, 250)
-			shaderSigma=random.randint(25, 50)
-			blobThresh=random.randint(100, 120)
-			innerThresh=random.randint(40, 60)
-			minSize=random.randint(400, 600)
-			maxSize=random.randint(800, 1200)
-		elif(flaw==1):
-			# 1 Blob, Not Pixelated
-			numBlob=1
-			flatBG=True
-			touchingEdge=True
-			filterOn=False
-			sigma=50
-			shaderSigma=random.randint(5, 20)
-			blobThresh=random.randint(150, 180)
-			innerThresh=random.randint(5, 10)
-			minSize=random.randint(750, 1000)
-			maxSize=random.randint(1500, 2000)
+			flatBG=False
+			touchingEdge=False
+			addColors=False
+			hasEdges=2
 		else:
-			# Mult blobs, Not Jagged, Not Pixelated
-			numBlob=random.randint(2,3)
+			# Touching line
+			numBlob=random.randrange(3,4)
+			minSize=250
+			maxSize=400
+			blobThresh=random.randint(180, 220)
+			innerThresh=random.randint(40, 50)
+			sigma=120#random.randint(90, 120)
+			shaderSigma=random.randint(5, 10)
+			betweenBlobs=0
 			filterOn=True
 			flatBG=True
 			touchingEdge=False
-			sigma=random.randint(160, 225)
-			shaderSigma=random.randint(15, 20)
-			minSize=random.randint(500, 750)
-			maxSize=1000
-			blobThresh=random.randint(150, 180)
-			innerThresh=random.randint(10, 25)
-			# name='B2_'+str(i)
+			addColors=False
+			hasEdges=3
 		name='B_'+str(i)
 	else:
 		# GRADE A
+		numBlob=random.randrange(1,2)
+		minSize=250
+		maxSize=1000
+		blobThresh=random.randint(180, 220)
+		innerThresh=random.randint(10, 15)
+		sigma=120#random.randint(90, 120)
+		shaderSigma=random.randint(30, 60)
+		betweenBlobs=0
 		filterOn=True
 		flatBG=True
-		numBlob=1
-		touchingEdge=True
-		sigma=120
-		shaderSigma=random.randint(15, 20)
-		minSize=random.randint(500, 750)
-		maxSize=random.randint(1000, 2000)
-		blobThresh=random.randint(180, 250)
-		innerThresh=random.randint(10, 20)
+		touchingEdge=False
+		addColors=False
+		hasEdges=2
 		name='A_'+str(i)
 
 	testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
-		sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name)
+		sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name, hasEdges)
 	imgArr.append(testImage)
 
 pool.map(Blob.makeImg, imgArr)
