@@ -30,27 +30,27 @@ from blobClass.blob import Blob
 	# testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
 	# 		sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name*"_"+str(i), hasEdges)
 	# testImage.makeImg()
-for i in range(10):
-	numBlob=random.randrange(3,4)
-	minSize=150
-	maxSize=300
-	blobThresh=random.randint(180, 220)
-	innerThresh=random.randint(5, 15)
-	sigma=random.randint(100, 140)
-	shaderSigma=random.randint(60, 120)
-	betweenBlobs=0
-	path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
-	name='edgeToEdge'
-	filterOn=False
-	flatBG=True
-	touchingEdge=False
-	addColors=False
-	hasEdges=3
+# for i in range(10):
+numBlob=2
+minSize=400
+maxSize=600
+blobThresh=random.randint(180, 220)
+innerThresh=random.randint(5, 15)
+sigma=random.randint(100, 140)
+shaderSigma=random.randint(60, 120)
+betweenBlobs=0
+path='/Users/Sam/Desktop/regenProj/edgedBlobs/Make_1'
+name='AAAAA'
+filterOn=True
+flatBG=True
+touchingEdge=False
+addColors=False
+hasEdges=3
 
 
 
-	testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
-			sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name+'_'+str(i), hasEdges)
-	testImage.makeImg()
+testImage=Blob(numBlob, minSize, maxSize, blobThresh, innerThresh,
+		sigma, shaderSigma, path, betweenBlobs, touchingEdge, flatBG, filterOn, addColors, name, hasEdges)
+testImage.makeImg()
 
 
